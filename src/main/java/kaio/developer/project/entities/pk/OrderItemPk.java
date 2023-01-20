@@ -10,24 +10,23 @@ import kaio.developer.project.entities.Order;
 import kaio.developer.project.entities.Product;
 
 @Embeddable
-public class OrderItemPk implements Serializable {
-
+public class OrderItemPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne
 	@JoinColumn(name = "order_id")
-	private Order oder;
-	
+	private Order order;
+
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
 
-	public Order getOder() {
-		return oder;
+	public Order getOrder() {
+		return order;
 	}
 
-	public void setOder(Order oder) {
-		this.oder = oder;
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public Product getProduct() {
@@ -40,7 +39,11 @@ public class OrderItemPk implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(oder, product);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((order == null) ? 0 : order.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
 	}
 
 	@Override
@@ -51,8 +54,17 @@ public class OrderItemPk implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OrderItemPk other = (OrderItemPk) obj;
-		return Objects.equals(oder, other.oder) && Objects.equals(product, other.product);
+		OrderItemPK other = (OrderItemPK) obj;
+		if (order == null) {
+			if (other.order != null)
+				return false;
+		} else if (!order.equals(other.order))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
 	}
-
 }
